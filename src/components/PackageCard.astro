@@ -1,0 +1,83 @@
+---
+import { formatKr, type Package } from '../data/event';
+
+interface Props {
+  pkg: Package;
+  href?: string;
+}
+
+const { pkg, href = '#kontakt' } = Astro.props;
+---
+
+<article class:list={['card', 'pkg', { featured: pkg.featured }]}>
+  <div><span class:list={['badge', { 'badge-gold': pkg.featured }]}>{pkg.badge}</span></div>
+  <h4 class="disp pkg-name">{pkg.name}</h4>
+  <p class="num pkg-price">{formatKr(pkg.price)}</p>
+  <ul class="check">
+    {pkg.points.map((point) => <li>{point}</li>)}
+  </ul>
+  <a class:list={['btn', 'btn-block-mobile', pkg.featured ? 'btn-gold' : 'btn-forest']} href={href} data-package={pkg.id}>
+    {pkg.cta}
+  </a>
+</article>
+
+<style>
+  .pkg {
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+  }
+
+  .pkg-name {
+    margin: 14px 0 4px;
+    font-size: 27px;
+    line-height: 1.2;
+  }
+
+  .pkg-price {
+    margin: 0 0 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 42px;
+    line-height: 1.1;
+  }
+
+  .check {
+    margin-bottom: 24px;
+  }
+
+  .pkg .btn {
+    margin-top: auto;
+  }
+
+  .featured {
+    --surface: var(--forest-950);
+    --ink: var(--cream);
+    --ink-body: var(--mist);
+    --numeral: var(--gold-light);
+    --icon: var(--gold);
+    --border: var(--line-forest);
+    --focus: var(--gold);
+    border-color: var(--forest-950);
+    box-shadow: var(--shadow-card);
+  }
+
+  @media (max-width: 760px) {
+    .pkg {
+      padding: 24px;
+    }
+
+    .pkg-name {
+      margin-top: 12px;
+      font-size: 26px;
+    }
+
+    .pkg-price {
+      font-size: 38px;
+    }
+
+    .check {
+      margin-bottom: 20px;
+    }
+  }
+</style>

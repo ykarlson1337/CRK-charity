@@ -32,6 +32,7 @@ export const event = {
   clubAddress: '[Adresse]',
   clubCvr: '[CVR]',
   clubEmail: '[Fælles e-mail]',
+  prospectUrl: '/charity-golf-2027-sponsorprospekt.pdf',
 };
 
 export function formatKr(amount: number): string {
@@ -182,14 +183,15 @@ export const singlePrices = [
   { label: 'Gallamiddag pr. person', price: 750, unit: 'ekskl. drikkevarer' },
 ];
 
-/** Options for the booking form, in the order shown in the dropdown. */
-export const bookingOptions: string[] = [
-  ...allPackages.map((p) => `${p.name} · ${formatKr(p.price)}`),
-  `Hold uden gallamiddag · ${formatKr(8000)}`,
-  `Par 3-plads · ${formatKr(1250)}`,
-  `Gallamiddag · ${formatKr(750)}`,
-  'Auktionsdonation',
-  'Andet',
+/** Options for the booking form, in the order shown in the dropdown.
+ *  `value` matches the data-package attribute on package buttons. */
+export const bookingOptions: { value: string; label: string }[] = [
+  ...allPackages.map((p) => ({ value: p.id, label: `${p.name} · ${formatKr(p.price)}` })),
+  { value: 'team-no-dinner', label: `Hold uden gallamiddag · ${formatKr(8000)}` },
+  { value: 'par3-seat', label: `Par 3-plads · ${formatKr(1250)}` },
+  { value: 'dinner', label: `Gallamiddag · ${formatKr(750)}` },
+  { value: 'auction', label: 'Auktionsdonation' },
+  { value: 'other', label: 'Andet' },
 ];
 
 export const program = [

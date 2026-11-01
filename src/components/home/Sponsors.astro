@@ -1,0 +1,112 @@
+---
+import { flags } from '../../data/event';
+---
+
+<section id="sponsorer" class="t-creme sec" aria-labelledby="sponsorer-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Sponsorer 2027</p>
+      <h2 id="sponsorer-title" class="disp h2">Tak til årets sponsorer</h2>
+      {
+        !flags.titelsponsorSolgt && (
+          <p class="lede intro">Sponsoraterne for 2027 er åbne, og titelsponsoratet er stadig ledigt.</p>
+        )
+      }
+    </div>
+    <div class="wall">
+      {
+        flags.titelsponsorSolgt ? (
+          <div class="placeholder-box slot-title sold">[Titelsponsorens logo]</div>
+        ) : (
+          <div class="placeholder-box slot-title">Titelsponsor · ledig</div>
+        )
+      }
+      <div class="row-3">
+        <div class="placeholder-box slot">Partnersponsor</div>
+        <div class="placeholder-box slot">Partnersponsor</div>
+        <div class="placeholder-box slot">Partnersponsor</div>
+      </div>
+      <div class="row-4">
+        <div class="placeholder-box slot-sm">Hulsponsor</div>
+        <div class="placeholder-box slot-sm">Hulsponsor</div>
+        <div class="placeholder-box slot-sm">Hulsponsor</div>
+        <div class="placeholder-box slot-sm">Hulsponsor</div>
+      </div>
+    </div>
+    <a class="btn btn-forest btn-block-mobile become" href="/sponsor">Bliv sponsor</a>
+  </div>
+</section>
+
+<style>
+  .intro {
+    margin-top: 20px;
+  }
+
+  .wall {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .slot-title {
+    min-height: 128px;
+    font-size: 16px;
+  }
+
+  .sold {
+    border-style: solid;
+    background: var(--paper);
+  }
+
+  .row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .row-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .slot {
+    min-height: 88px;
+  }
+
+  .slot-sm {
+    min-height: 64px;
+  }
+
+  .become {
+    margin-top: 32px;
+  }
+
+  @media (max-width: 760px) {
+    .wall,
+    .row-3,
+    .row-4 {
+      gap: 12px;
+    }
+
+    .slot-title {
+      min-height: 104px;
+      font-size: 15px;
+    }
+
+    .row-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .slot,
+    .slot-sm {
+      min-height: 64px;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .become {
+      margin-top: 28px;
+    }
+  }
+</style>

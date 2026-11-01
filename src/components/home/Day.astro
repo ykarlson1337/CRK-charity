@@ -1,0 +1,116 @@
+---
+import { Image } from 'astro:assets';
+import golf from '../../assets/icons/golf.png';
+import galla from '../../assets/icons/galla.png';
+import auktion from '../../assets/icons/auktion.png';
+import { event } from '../../data/event';
+
+const cards = [
+  {
+    icon: golf,
+    title: 'Golf',
+    text: 'Holdturnering på 18 huller for hold på fire. Nybegyndere spiller par 3 og får undervisning af professionelle trænere først.',
+    link: { label: 'Se format og regler', href: '/praktisk' },
+  },
+  {
+    icon: galla,
+    title: 'Galla',
+    text: `Velkomstdrink og tre retter på ${event.dinnerVenue} kl. 18:00, med musik og underholdning. 750 kr. pr. person ekskl. drikkevarer.`,
+    link: { label: 'Se programmet', href: '#program' },
+  },
+  {
+    icon: auktion,
+    title: 'Auktion',
+    text: 'Auktion under middagen. Det, buddene indbringer, går til det gode formål.',
+    link: { label: 'Donér en auktionsgenstand', href: '#auktion' },
+  },
+];
+---
+
+<section class="t-creme sec" aria-labelledby="dagen-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">{event.dateLabel}</p>
+      <h2 id="dagen-title" class="disp h2">Golf, galla og auktion på én dag</h2>
+      <p class="lede intro">
+        Dagen starter med morgenmad på {event.venue} kl. 08:00 og slutter med auktion på {event.dinnerVenue}.
+        Gallamiddagen kan tilkøbes til alle golfpladser.
+      </p>
+    </div>
+    <div class="grid cards">
+      {
+        cards.map((c) => (
+          <article class="card day-card">
+            <div class="card-head">
+              <Image src={c.icon} alt="" width={128} class="day-icon" />
+              <h3 class="disp h3">{c.title}</h3>
+            </div>
+            <p class="body text">{c.text}</p>
+            <a class="link" href={c.link.href}>
+              {c.link.label} →
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro {
+    margin-top: 20px;
+  }
+
+  .cards {
+    --min: 280px;
+  }
+
+  .day-card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 32px;
+  }
+
+  .card-head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .card-head :global(.day-icon) {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .day-card .link {
+    margin-top: auto;
+  }
+
+  @media (max-width: 760px) {
+    .day-card {
+      padding: 24px;
+      gap: 12px;
+    }
+
+    .card-head {
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .card-head :global(.day-icon) {
+      width: 52px;
+      height: 52px;
+    }
+
+    .text {
+      font-size: 15px;
+    }
+  }
+</style>

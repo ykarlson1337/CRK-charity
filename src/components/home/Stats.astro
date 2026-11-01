@@ -1,0 +1,80 @@
+---
+import { formatKr, totals } from '../../data/event';
+
+const stats = [
+  { value: formatKr(totals.donatedKr), label: 'doneret til velgørenhed siden 2024' },
+  { value: 'Udsolgt', label: 'i 2024, 2025 og 2026' },
+  { value: String(totals.players), label: `spillere på ${totals.teams} hold siden 2024` },
+];
+---
+
+<section class="t-creme stats" aria-label="Charity Golf i tal">
+  <div class="wrap stats-grid">
+    {
+      stats.map((s) => (
+        <div class="stat">
+          <p class="num value">{s.value}</p>
+          <p class="small label">{s.label}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .stats {
+    border-bottom: 1px solid var(--line-cream);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-block: 40px;
+  }
+
+  .stat {
+    padding: 12px 28px;
+    border-left: 1px solid var(--line-cream);
+  }
+
+  .stat:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .value {
+    font-size: clamp(34px, 4.6vw, 56px);
+    line-height: 1.05;
+  }
+
+  .label {
+    margin-top: 6px;
+    font-size: 15px;
+  }
+
+  @media (max-width: 760px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+      padding-block: 8px;
+    }
+
+    .stat {
+      display: grid;
+      grid-template-columns: 168px 1fr;
+      align-items: baseline;
+      gap: 12px;
+      padding: 16px 0;
+      border-left: 0;
+      border-top: 1px solid var(--line-cream);
+    }
+
+    .stat:first-child {
+      border-top: 0;
+    }
+
+    .label {
+      margin-top: 0;
+      font-size: 14px;
+    }
+  }
+</style>
