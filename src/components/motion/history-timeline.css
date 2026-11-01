@@ -1,0 +1,152 @@
+/* History timeline (see HistoryTimeline.tsx). Static state first, motion
+   only under .is-animated, which is set after hydration. */
+
+.htl {
+  position: relative;
+  --line-x: 9px;
+  --line-inset: 12px;
+}
+
+.htl-list {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.htl-track,
+.htl-fill {
+  position: absolute;
+  left: var(--line-x);
+  top: var(--line-inset);
+  bottom: var(--line-inset);
+  width: 3px;
+}
+
+.htl-track {
+  background: var(--line-cream);
+}
+
+.htl-fill {
+  background: var(--gold-rule);
+  transform-origin: top;
+  transform: scaleY(var(--progress, 1));
+}
+
+.htl-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 140px minmax(0, 1fr);
+  gap: 0 24px;
+  padding-bottom: clamp(32px, 4vw, 48px);
+}
+
+.htl-item:last-child {
+  padding-bottom: 0;
+}
+
+.htl-dot {
+  position: relative;
+  z-index: 1;
+  width: 21px;
+  height: 21px;
+  margin-top: 10px;
+  border: 3px solid var(--gold-rule);
+  border-radius: 50%;
+  background: var(--cream);
+}
+
+.htl-year {
+  margin: 0;
+  font-size: clamp(36px, 4vw, 48px);
+  line-height: 1;
+}
+
+.htl-venue {
+  margin: 0 0 6px;
+  font: 600 18px/1.35 var(--font-sans);
+  color: var(--forest-950);
+}
+
+.htl-facts {
+  margin: 0;
+  font-size: 16px;
+}
+
+.htl-amount {
+  font-size: 22px;
+}
+
+.htl-content figure {
+  max-width: 520px;
+  margin: 20px 0 0;
+}
+
+.htl-content figcaption {
+  margin-top: 10px;
+}
+
+/* Motion: the rule draws, dots fill and content rises as the visitor scrolls. */
+.is-animated .htl-fill {
+  transition: transform 120ms linear;
+}
+
+.is-animated .htl-dot {
+  border-color: var(--line-cream);
+  transition:
+    border-color 400ms ease,
+    background-color 400ms ease,
+    transform 400ms ease;
+}
+
+.is-animated .htl-year,
+.is-animated .htl-content {
+  opacity: 0.3;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms ease-out,
+    transform 700ms ease-out;
+}
+
+.is-animated .is-active .htl-dot {
+  border-color: var(--gold-rule);
+  background: var(--gold);
+  transform: scale(1.15);
+}
+
+.is-animated .is-active .htl-year,
+.is-animated .is-active .htl-content {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .htl-item {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 4px 16px;
+  }
+
+  .htl-year {
+    grid-column: 2;
+    font-size: 32px;
+  }
+
+  .htl-content {
+    grid-column: 2;
+  }
+
+  .htl-dot {
+    grid-row: 1;
+    margin-top: 6px;
+  }
+
+  .htl-facts {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .htl * {
+    transition: none !important;
+  }
+}

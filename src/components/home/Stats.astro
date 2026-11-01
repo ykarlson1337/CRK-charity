@@ -1,23 +1,22 @@
 ---
-import { formatKr, totals } from '../../data/event';
-
-const stats = [
-  { value: formatKr(totals.donatedKr), label: 'doneret til velgørenhed siden 2024' },
-  { value: 'Udsolgt', label: 'i 2024, 2025 og 2026' },
-  { value: String(totals.players), label: `spillere på ${totals.teams} hold siden 2024` },
-];
+import NumberTicker from '../motion/NumberTicker';
+import { totals } from '../../data/event';
 ---
 
 <section class="t-creme stats" aria-label="Charity Golf i tal">
   <div class="wrap stats-grid">
-    {
-      stats.map((s) => (
-        <div class="stat">
-          <p class="num value">{s.value}</p>
-          <p class="small label">{s.label}</p>
-        </div>
-      ))
-    }
+    <div class="stat">
+      <p class="num value"><NumberTicker client:load value={totals.donatedKr} /> kr.</p>
+      <p class="small label">doneret til velgørenhed siden 2024</p>
+    </div>
+    <div class="stat">
+      <p class="num value">Udsolgt</p>
+      <p class="small label">i 2024, 2025 og 2026</p>
+    </div>
+    <div class="stat">
+      <p class="num value"><NumberTicker client:load value={totals.players} delay={0.2} /></p>
+      <p class="small label">spillere på {totals.teams} hold siden 2024</p>
+    </div>
   </div>
 </section>
 

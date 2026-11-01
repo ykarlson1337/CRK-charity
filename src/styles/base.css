@@ -391,3 +391,28 @@ a:hover {
     width: 100%;
   }
 }
+
+/* Number ticker (src/components/motion/NumberTicker.tsx). The final number is
+   in the HTML; with JavaScript it stays hidden until the island has reset it
+   to zero, and shows anyway after a few seconds if hydration never happens. */
+.ticker {
+  font-variant-numeric: oldstyle-nums tabular-nums;
+}
+
+.js [data-ticker]:not([data-ready]) {
+  opacity: 0;
+  animation: ticker-reveal 0s linear 2.5s forwards;
+}
+
+@keyframes ticker-reveal {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-ticker]:not([data-ready]) {
+    opacity: 1;
+    animation: none;
+  }
+}
