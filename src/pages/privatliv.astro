@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import { event } from '../data/event';
+---
+
+<Base
+  title="Privatlivspolitik"
+  description={`Sådan behandler ${event.club} de oplysninger, I giver os, når I tilmelder jer ${event.name}.`}
+  current="other"
+>
+  <section class="t-skov sec-hero">
+    <div class="wrap">
+      <p class="eyebrow">Privatliv</p>
+      <h1 class="disp h1">Privatlivspolitik</h1>
+      <p class="lede intro">Sidst opdateret [dato].</p>
+    </div>
+  </section>
+
+  <article class="t-creme sec">
+    <div class="wrap">
+      <div class="prose">
+      <p class="note draft">
+        Udkast. Teksten skal godkendes af klubben, før den bruges. Felter i [klammer] mangler.
+      </p>
+
+      <h2 class="disp">Dataansvarlig</h2>
+      <p>
+        {event.club}<br />
+        {event.clubAddress}<br />
+        CVR {event.clubCvr}<br />
+        {event.clubEmail}
+      </p>
+
+      <h2 class="disp">Hvilke oplysninger vi behandler</h2>
+      <p>
+        Når I sender en forespørgsel via formularen på siden, modtager vi navn, virksomhed, e-mail, telefonnummer, den
+        pakke I har valgt, antal og jeres besked. Ringer eller skriver I direkte til en af os, behandler vi de oplysninger,
+        I selv giver.
+      </p>
+
+      <h2 class="disp">Formål og grundlag</h2>
+      <p>
+        Vi bruger oplysningerne til at behandle jeres tilmelding, bekræfte pladsen, sende faktura og kontakte jer om
+        arrangementet. Grundlaget er, at behandlingen er nødvendig for at indgå og opfylde aftalen med jer
+        (databeskyttelsesforordningens artikel 6, stk. 1, litra b). Fakturaer opbevarer vi, fordi bogføringsloven kræver det
+        (artikel 6, stk. 1, litra c).
+      </p>
+
+      <h2 class="disp">Hvem der ser oplysningerne</h2>
+      <p>
+        Oplysningerne går til arrangørerne i {event.club}. Siden drives af Vercel, og beskeder fra formularen sendes som
+        e-mail via Resend. Begge behandler data på vores vegne som databehandlere. [Bekræft databehandleraftaler og
+        grundlaget for overførsel af data til lande uden for EU.]
+      </p>
+
+      <h2 class="disp">Hvor længe vi gemmer dem</h2>
+      <p>
+        Vi sletter henvendelser og tilmeldinger senest [antal] måneder efter arrangementet. Fakturaer og bogføringsbilag
+        gemmes i fem år efter regnskabsårets afslutning, som bogføringsloven kræver.
+      </p>
+
+      <h2 class="disp">Cookies og statistik</h2>
+      <p>
+        Siden sætter ingen cookies. Vi måler antal besøg med Vercel Web Analytics, som tæller sidevisninger uden cookies og
+        uden at gemme oplysninger, der kan identificere jer.
+      </p>
+
+      <h2 class="disp">Jeres rettigheder</h2>
+      <p>
+        I har ret til at få indsigt i de oplysninger, vi har om jer, og til at få dem rettet eller slettet. I kan også bede os
+        begrænse behandlingen, gøre indsigelse og få oplysningerne udleveret. Skriv til {event.clubEmail}.
+      </p>
+      <p>
+        Er I utilfredse med, hvordan vi behandler jeres oplysninger, kan I klage til Datatilsynet, Carl Jacobsens Vej 35,
+        2500 Valby, <a class="link" href="https://www.datatilsynet.dk">datatilsynet.dk</a>.
+      </p>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .sec-hero {
+    padding-block: clamp(64px, 7vw, 96px) clamp(48px, 5vw, 72px);
+  }
+
+  .h1 {
+    font-size: clamp(44px, 6vw, 72px);
+  }
+
+  .intro {
+    margin-top: 16px;
+  }
+
+  .prose {
+    max-width: 760px;
+  }
+
+  .prose h2 {
+    margin: 40px 0 12px;
+    font-size: clamp(26px, 3vw, 32px);
+    line-height: 1.2;
+  }
+
+  .prose p {
+    margin: 0 0 14px;
+    color: var(--ink-body);
+  }
+
+  .draft {
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 760px) {
+    .prose h2 {
+      margin-top: 32px;
+    }
+  }
+</style>

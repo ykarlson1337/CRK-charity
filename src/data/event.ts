@@ -283,3 +283,85 @@ export const nav = [
   { label: 'Praktisk', href: '/praktisk' },
   { label: 'Kontakt', href: '/#kontakt' },
 ];
+
+/** Link to the booking form with a package preselected. */
+export function bookHref(packageId?: string): string {
+  return packageId ? `/?pakke=${packageId}#kontakt` : '/#kontakt';
+}
+
+/** Sponsor page: comparison table. Empty string means the package does not include it. */
+export const comparisonColumns = ['Navn i titlen', 'Hjemmeside', 'Scorekort', 'Borde og scene', 'På banen', 'Golf'];
+
+export const comparison: Record<PackageTier, string[]> = {
+  title: ['Ja', 'Logo', 'Logo', 'Logo på borde og scene', 'Flag, skilte og produkter', '1 hold à 4, 18 huller'],
+  partner: ['', 'Logo', '', 'Logo ved scenen', 'Logo eller flag på 3 huller', '1 hold à 4, 18 huller'],
+  hole: ['', '', '', '', 'Logo eller flag på 1 hul', '1 hold à 4, 18 huller'],
+  team: ['', '', '', '', '', '1 hold à 4, 18 huller'],
+  par3: ['', '', '', '', '', '4 pladser på par 3 med undervisning'],
+};
+
+/** Sponsor page: who sponsors meet. */
+export const audience = {
+  intro:
+    'Erhvervsliv og golfspillere: [antal] hold på 18 huller, op til 36 nybegyndere på par 3 og [antal] gæster til gallamiddagen. Turneringen har været udsolgt i 2024, 2025 og 2026.',
+  stats: [
+    { value: '[antal]', label: 'hold på 18-hullersbanen' },
+    { value: '36', label: 'pladser til nybegyndere på par 3' },
+    { value: 'Udsolgt', label: 'i 2024, 2025 og 2026' },
+  ],
+};
+
+export const sponsorSteps = [
+  'Send en forespørgsel, eller ring til en af os.',
+  'Vi bekræfter og sender faktura.',
+  'I sender logo i [format] senest [dato].',
+  `Vi ses ${event.dateLabel.charAt(0).toLowerCase()}${event.dateLabel.slice(1)} på ${event.venue}.`,
+];
+
+/** Practical info page. */
+export const tournament = [
+  {
+    title: 'Format',
+    text: 'Hold på fire spiller bedst bold: de tre bedste stableford-scorer på hvert hul tæller. Formatet passer til blandede niveauer, fordi alle bidrager.',
+  },
+  { title: 'Start', text: 'Gunstart kl. 09:00. Alle hold starter samtidig fra hvert sit hul.' },
+  { title: 'Handicap', text: 'Gyldigt DGU-kort. Der spilles med fuldt handicap.' },
+  { title: 'Tee', text: '[Tee for damer og herrer på Smørum Golfklub]' },
+  {
+    title: 'Spilletempo',
+    text: 'Højst 4 timer og 30 minutter for 18 huller. Marshals er på banen for at holde tempoet.',
+  },
+  {
+    title: 'Præmier',
+    text: 'Præmier til de tre bedste hold, nærmest hullet på alle par 3-huller og længste drive i fairway.',
+  },
+];
+
+export const holeInOne = {
+  hole: '[hul]',
+  prizeKr: 100000,
+  note: "Pro'er kan ikke vinde diamanten.",
+};
+
+export const par3Points = [
+  'Morgenmad kl. 08:00',
+  'Undervisning fra kl. [tid]',
+  'Turnering på par 3-banen bagefter',
+  'Plads til 36 deltagere',
+  '[DGU-kort: afklares]',
+];
+
+export const gala = {
+  time: '18:00',
+  text: 'Velkomstdrink, tre retter, musik og underholdning, og auktion til fordel for det gode formål.',
+  facts: [
+    { term: 'Pris', value: `${formatKr(750)} pr. person ekskl. drikkevarer` },
+    { term: 'Adresse', value: '[Adresse]' },
+    { term: 'Dresscode', value: '[Afklares]' },
+  ],
+};
+
+export const transport = [
+  { title: 'Parkering', text: '[Parkering på Smørum Golfklub]' },
+  { title: 'Fra banen til middagen', text: '[Transport fra Smørum Golfklub til Restaurant Kongemosen]' },
+];

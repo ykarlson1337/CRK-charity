@@ -1,0 +1,68 @@
+---
+import ContactList from './ContactList.astro';
+
+interface Props {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+}
+
+const { id = 'kontakt', eyebrow, title, text } = Astro.props;
+---
+
+<section id={id} class="t-skov sec" aria-labelledby={`${id}-title`}>
+  <div class="wrap layout">
+    <div class="copy">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 id={`${id}-title`} class="disp h2">{title}</h2>
+      <p class="lede">{text}</p>
+      <div class="actions">
+        <slot />
+      </div>
+    </div>
+    <ContactList />
+  </div>
+</section>
+
+<style>
+  .layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px clamp(40px, 6vw, 96px);
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .copy {
+    flex: 1 1 420px;
+    max-width: 620px;
+  }
+
+  .lede {
+    margin-top: 20px;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .layout > :global(ul) {
+    flex: 0 1 320px;
+  }
+
+  @media (max-width: 760px) {
+    .actions {
+      flex-direction: column;
+    }
+
+    .layout > :global(ul) {
+      flex: 1 1 100%;
+      padding-top: 28px;
+      border-top: 1px solid var(--line-forest);
+    }
+  }
+</style>
