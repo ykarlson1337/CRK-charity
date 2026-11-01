@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { event } from '../data/event';
+---
+
+<Base
+  description={`${event.name} ${event.year}: holdturnering, par 3 for nybegyndere, gallamiddag og auktion. ${event.dateLabel} på ${event.venue}.`}
+  current="home"
+>
+  <section class="t-skov sec">
+    <div class="wrap">
+      <p class="eyebrow">{event.club} præsenterer</p>
+      <h1 class="disp h1">Charity Golf {event.year}</h1>
+      <p class="tagline" style="margin-top: 12px;">Golf · Galla · Auktion</p>
+      <p class="lede" style="margin-top: 20px; color: var(--cream);">
+        {event.dateLabel} · {event.venue} · Gallamiddag på {event.dinnerVenue}
+      </p>
+    </div>
+  </section>
+</Base>

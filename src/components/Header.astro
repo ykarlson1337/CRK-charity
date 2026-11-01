@@ -1,0 +1,224 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logos/crk-charity-golf.png';
+import { event, nav } from '../data/event';
+import type { Current } from '../layouts/Base.astro';
+
+interface Props {
+  current: Current;
+}
+
+const { current } = Astro.props;
+const isCurrent = (href: string) =>
+  (current === 'sponsor' && href === '/sponsor') || (current === 'praktisk' && href === '/praktisk');
+const logoAlt = `${event.club} · ${event.shortName}, til forsiden`;
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label={logoAlt}>
+      <Image src={logo} alt="" width={440} loading="eager" class="brand-logo" />
+    </a>
+
+    <nav class="nav-desktop" aria-label="Hovedmenu">
+      {
+        nav.map((item) => (
+          <a class="nav-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a class="btn btn-forest btn-sm" href="/#kontakt">Book plads</a>
+    </nav>
+
+    <div class="nav-mobile">
+      <a class="btn btn-forest btn-sm" href="/#kontakt">Book</a>
+      <details class="menu" data-menu>
+        <summary class="menu-btn" aria-label="Menu">
+          <svg class="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path>
+          </svg>
+          <svg class="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12"></path><path d="M18 6L6 18"></path>
+          </svg>
+        </summary>
+        <nav class="menu-panel" aria-label="Mobilmenu">
+          {
+            nav.map((item) => (
+              <a class="menu-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+          <a class="btn btn-gold btn-block" href="/#kontakt">Book jeres plads</a>
+          <p class="small menu-note">Tilmelding senest {event.deadlineLabel}</p>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Close the mobile menu after a link is chosen or Escape is pressed.
+  const menu = document.querySelector<HTMLDetailsElement>('[data-menu]');
+  if (menu) {
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => menu.removeAttribute('open'));
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menu.open) {
+        menu.removeAttribute('open');
+        menu.querySelector('summary')?.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line-cream);
+    --focus: var(--forest-950);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+    min-height: var(--header-h);
+  }
+
+  .brand {
+    display: block;
+    flex: none;
+  }
+
+  .brand :global(.brand-logo) {
+    height: 52px;
+    width: auto;
+  }
+
+  .nav-desktop {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--forest-950);
+  }
+
+  .nav-link:hover {
+    color: var(--gold-deep);
+  }
+
+  .nav-link[aria-current='page'] {
+    color: var(--gold-deep);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-color: var(--gold-rule);
+  }
+
+  .nav-mobile {
+    display: none;
+  }
+
+  .menu summary {
+    list-style: none;
+  }
+
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line-cream);
+    border-radius: var(--radius-pill);
+    color: var(--forest-950);
+    cursor: pointer;
+  }
+
+  .icon-close {
+    display: none;
+  }
+
+  .menu[open] .icon-open {
+    display: none;
+  }
+
+  .menu[open] .icon-close {
+    display: block;
+  }
+
+  .menu-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: 4px clamp(20px, 4.5vw, 64px) 24px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line-cream);
+    box-shadow: var(--shadow-card);
+  }
+
+  .menu-link {
+    display: block;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-cream);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.2;
+    color: var(--forest-950);
+    text-decoration: none;
+  }
+
+  .menu-link:hover,
+  .menu-link[aria-current='page'] {
+    color: var(--gold-deep);
+  }
+
+  .menu-panel .btn {
+    margin-top: 20px;
+  }
+
+  .menu-note {
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  @media (max-width: 1080px) {
+    .nav-desktop {
+      display: none;
+    }
+
+    .nav-mobile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand :global(.brand-logo) {
+      height: 36px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .brand :global(.brand-logo) {
+      height: 30px;
+    }
+  }
+</style>
