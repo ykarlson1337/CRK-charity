@@ -1,0 +1,56 @@
+---
+import { contacts, telHref } from '../data/event';
+---
+
+<ul class="contacts">
+  {
+    contacts.map((c) => (
+      <li>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <div>
+          <span class="name">{c.name}</span>
+          <a href={telHref(c.phone)}>{c.phone}</a>
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .contacts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  li {
+    display: flex;
+    gap: 14px;
+  }
+
+  svg {
+    flex: none;
+    margin-top: 2px;
+    color: var(--icon);
+  }
+
+  .name {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  a {
+    color: var(--ink-body);
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+</style>

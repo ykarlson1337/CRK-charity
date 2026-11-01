@@ -1,0 +1,78 @@
+/* CRK Charity design tokens.
+   Values come from docs/design/tokens.json (CRK Charity design system).
+   The system is measured on 1920 x 1080 slides; type, spacing and radii
+   are scaled to web here (about 0.6 of slide size on desktop). */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Italic-Variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/DMSans-Variable.woff2') format('woff2');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Palette */
+  --forest-950: #0e2a20;
+  --forest-900: #163d2e;
+  --forest-800: #1f513c;
+  --forest-700: #2a5a44;
+  --fairway: #2e7350;
+  --gold: #d4af5a;
+  --gold-rule: #c9a24a;
+  --gold-light: #e3c47c;
+  --gold-icon: #a9832f;
+  --gold-deep: #8a6a1f;
+  --cream: #f5f0e4;
+  --paper: #fbf8f1;
+  --sand: #eadfc4;
+  --line-cream: #e2d8c2;
+  --line-forest: #3b5f50;
+  --slate: #3e4a44;
+  --slate-muted: #5e655f;
+  --mist: #c9d6cc;
+  --mist-muted: #9db0a4;
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+
+  /* Radii and shadows (web scale) */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-pill: 9999px;
+  --shadow-card: 0 8px 20px rgba(14, 42, 32, 0.22);
+  --shadow-photo: 0 10px 24px rgba(14, 42, 32, 0.28);
+
+  /* Semantic defaults (creme theme) */
+  --bg: var(--cream);
+  --surface: var(--paper);
+  --surface-tint: var(--sand);
+  --border: var(--line-cream);
+  --ink: var(--forest-950);
+  --ink-body: var(--slate);
+  --ink-muted: var(--slate-muted);
+  --accent: var(--gold-deep);
+  --numeral: var(--gold-deep);
+  --icon: var(--gold-icon);
+  --focus: var(--forest-950);
+
+  /* Layout */
+  --header-h: 72px;
+}

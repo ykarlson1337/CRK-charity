@@ -1,0 +1,103 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logos/crk-charity-golf.png';
+import kongemosen from '../assets/logos/kongemosen.png';
+import { event } from '../data/event';
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="grid cols">
+      <div class="col-club">
+        <Image src={logo} alt={`${event.club} · ${event.shortName}`} width={440} class="footer-logo" />
+        <p class="body club">{event.club}</p>
+        <p class="small">{event.clubAddress} · {event.clubCvr} · {event.clubEmail}</p>
+      </div>
+      <div>
+        <p class="eyebrow">Sider</p>
+        <ul class="links">
+          <li><a href="/sponsor">Sponsorpakker</a></li>
+          <li><a href="/praktisk">Spilformat og praktisk info</a></li>
+          <li><a href="/privatliv">Privatlivspolitik</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Dagens steder</p>
+        <p class="body venue">{event.venue}</p>
+        <Image src={kongemosen} alt={event.dinnerVenue} width={320} class="partner-logo" />
+      </div>
+    </div>
+    <p class="small baseline">{event.name} · {event.dateShort}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    --ink: var(--forest-950);
+    --ink-body: var(--slate);
+    --ink-muted: var(--slate-muted);
+    --accent: var(--gold-deep);
+    --focus: var(--forest-950);
+    background: var(--paper);
+    border-top: 1px solid var(--line-cream);
+    padding-block: 56px 32px;
+  }
+
+  .cols {
+    --min: 240px;
+    gap: 40px;
+  }
+
+  .col-club {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .col-club :global(.footer-logo) {
+    height: 52px;
+    width: auto;
+  }
+
+  .club,
+  .venue {
+    font-weight: 600;
+    color: var(--forest-950);
+  }
+
+  .venue {
+    margin-bottom: 14px;
+  }
+
+  .links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .links a {
+    display: block;
+    padding: 6px 0;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--forest-950);
+  }
+
+  .links a:hover {
+    color: var(--gold-deep);
+  }
+
+  :global(.partner-logo) {
+    height: 56px;
+    width: auto;
+    border: 1px solid var(--line-cream);
+    border-radius: var(--radius-sm);
+  }
+
+  .baseline {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-cream);
+  }
+</style>
