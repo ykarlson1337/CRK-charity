@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Siden findes ikke" description="Siden findes ikke." current="other" noindex>
+  <section class="t-skov sec not-found">
+    <div class="wrap">
+      <p class="eyebrow">Fejl 404</p>
+      <h1 class="disp h1">Siden findes ikke</h1>
+      <p class="lede intro">Linket er måske forældet, eller siden er flyttet. Prøv en af disse:</p>
+      <div class="actions">
+        <a class="btn btn-gold btn-block-mobile" href="/">Til forsiden</a>
+        <a class="btn btn-ghost btn-block-mobile" href="/sponsor">Sponsorpakker</a>
+        <a class="btn btn-ghost btn-block-mobile" href="/praktisk">Praktisk info</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .not-found .wrap {
+    width: 100%;
+  }
+
+  .h1 {
+    font-size: clamp(44px, 6vw, 72px);
+  }
+
+  .intro {
+    margin-top: 16px;
+    max-width: 560px;
+    color: var(--cream);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 760px) {
+    .actions {
+      flex-direction: column;
+    }
+  }
+</style>

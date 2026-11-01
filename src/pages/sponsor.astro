@@ -1,0 +1,523 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactCta from '../components/ContactCta.astro';
+import golfball from '../assets/photos/golfbold-smorum.jpg';
+import holeFlag from '../assets/icons/hulflag.png';
+import {
+  allPackages,
+  audience,
+  bookHref,
+  comparison,
+  comparisonColumns,
+  event,
+  formatKr,
+  sponsorSteps,
+} from '../data/event';
+
+const prices = allPackages.map((p) => p.price);
+const minPrice = Math.min(...prices);
+const maxPrice = Math.max(...prices);
+// formatKr ends with "kr.", so it also closes the sentence.
+const range = `fra ${minPrice.toLocaleString('da-DK')} til ${formatKr(maxPrice)}`;
+---
+
+<Base
+  title="Bliv sponsor"
+  description={`Fem sponsorpakker til ${event.name} ${event.year} ${range} Alle inkluderer golf og gallamiddag for fire.`}
+  current="sponsor"
+>
+  <PageHero
+    eyebrow={`Sponsorpakker ${event.year}`}
+    title={`Bliv sponsor af ${event.shortName} ${event.year}`}
+    lede={`Fem pakker ${range} Alle inkluderer golf og gallamiddag for fire personer.`}
+    image={golfball}
+    imageAlt="Golfbold med Smørum Golfklubs logo foran en putter"
+  >
+    <div class="hero-actions">
+      <a class="btn btn-gold btn-block-mobile" href={bookHref()}>Book sponsorat</a>
+      <a class="btn btn-ghost btn-block-mobile" href={event.prospectUrl} download>Hent prospektet (PDF)</a>
+    </div>
+    <p class="small hero-meta">
+      {event.dateLabel} · {event.venue} · Tilmelding senest {event.deadlineLabel}
+    </p>
+  </PageHero>
+
+  <section class="t-creme sec audience" aria-labelledby="publikum-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Publikum</p>
+        <h2 id="publikum-title" class="disp h2">Hvem I møder</h2>
+        <p class="lede intro">{audience.intro}</p>
+      </div>
+      <div class="stats">
+        {
+          audience.stats.map((s) => (
+            <div class="stat">
+              <p class="num stat-value">{s.value}</p>
+              <p class="small stat-label">{s.label}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="t-creme compare-section" aria-labelledby="sammenlign-title">
+    <div class="wrap">
+      <h2 id="sammenlign-title" class="disp h2 section-title">
+        <span class="desktop-only">Sammenlign pakkerne</span>
+        <span class="mobile-only">Pakkerne i overblik</span>
+      </h2>
+
+      <div class="card table-wrap desktop-only">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th scope="col">Pakke</th>
+              <th scope="col">Pris</th>
+              {comparisonColumns.map((c) => <th scope="col">{c}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              allPackages.map((p) => (
+                <tr class:list={{ featured: p.featured }}>
+                  <th scope="row" class="disp row-name">
+                    {p.name}
+                  </th>
+                  <td class="num row-price">{formatKr(p.price)}</td>
+                  {comparison[p.id].map((v) =>
+                    v ? (
+                      <td>{v}</td>
+                    ) : (
+                      <td>
+                        <span class="sr-only">Ikke med</span>
+                      </td>
+                    ),
+                  )}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="card overview mobile-only">
+        {
+          allPackages.map((p) => (
+            <li>
+              <p class="overview-head">
+                <span class="disp overview-name">{p.name}</span>
+                <span class="num overview-price">{formatKr(p.price)}</span>
+              </p>
+              <p class="small">{p.overview}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="small footnote">
+        Alle pakker inkluderer gallamiddag for fire. {event.vatNote.replace('Alle priser', 'Priserne')}{' '}
+        <span class="desktop-only-inline">Et tomt felt betyder, at pakken ikke har det.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="t-creme packages-section" aria-labelledby="pakker-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Pakkerne enkeltvis</p>
+        <h2 id="pakker-title" class="disp h2">Det får I</h2>
+      </div>
+      <div class="splits">
+        {
+          allPackages.map((p, i) => (
+            <article class="split" id={`pakke-${p.id}`} aria-labelledby={`pakke-${p.id}-title`}>
+              <div class="split-l t-skov" style={`background: var(--${p.panel});`}>
+                <p class="eyebrow">
+                  Sponsorpakke {i + 1} af {allPackages.length}
+                </p>
+                <h3 id={`pakke-${p.id}-title`} class="disp split-name">
+                  {p.name}
+                </h3>
+                <p class="num split-price">{formatKr(p.price)}</p>
+                <hr class="gold-rule" />
+                <p class="body split-tagline">{p.tagline}</p>
+              </div>
+              <div class="split-r">
+                <div class="split-content">
+                  <ul class="check">
+                    {p.details.map((d) => (
+                      <li>{d}</li>
+                    ))}
+                  </ul>
+                  <div>
+                    <a class="btn btn-forest btn-block-mobile" href={bookHref(p.id)}>
+                      {p.cta}
+                    </a>
+                  </div>
+                </div>
+                {p.id === 'hole' && <Image src={holeFlag} alt="" width={400} class="flag" />}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="t-creme sec steps-section" aria-labelledby="forloeb-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Forløbet</p>
+        <h2 id="forloeb-title" class="disp h2">Sådan foregår det</h2>
+      </div>
+      <ol class="steps">
+        {
+          sponsorSteps.map((s, i) => (
+            <li>
+              <span class="num step-no">{i + 1}</span>
+              <p class="body">{s}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <ContactCta
+    eyebrow="Bliv sponsor"
+    title="Book jeres sponsorat"
+    text={`Send en forespørgsel via formularen på forsiden, eller ring direkte. Tilmelding senest ${event.deadlineLabel}. Først til mølle.`}
+  >
+    <a class="btn btn-gold btn-block-mobile" href={bookHref()}>Gå til formularen</a>
+    <a class="btn btn-ghost btn-block-mobile" href={event.prospectUrl} download>Hent prospektet (PDF)</a>
+  </ContactCta>
+</Base>
+
+<style>
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .hero-meta {
+    color: var(--mist);
+  }
+
+  .audience {
+    padding-bottom: clamp(40px, 5vw, 64px);
+  }
+
+  .intro {
+    margin-top: 20px;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat {
+    padding: 12px 28px;
+    border-left: 1px solid var(--border);
+  }
+
+  .stat:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .stat-value {
+    font-size: clamp(40px, 4.6vw, 56px);
+    line-height: 1.05;
+  }
+
+  .stat-label {
+    margin-top: 6px;
+    font-size: 15px;
+  }
+
+  .compare-section,
+  .packages-section {
+    padding-bottom: clamp(64px, 8vw, 104px);
+  }
+
+  .section-title {
+    margin-bottom: 28px;
+  }
+
+  .mobile-only {
+    display: none;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .tbl {
+    width: 100%;
+    min-width: 880px;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .tbl th[scope='col'] {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: bottom;
+    font: 600 12px/1.3 var(--font-sans);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .tbl td,
+  .tbl .row-name {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-body);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .tbl tr:last-child td,
+  .tbl tr:last-child .row-name {
+    border-bottom: 0;
+  }
+
+  .tbl .row-name {
+    font-size: 22px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .tbl .row-price {
+    font-size: 22px;
+    white-space: nowrap;
+  }
+
+  .tbl .featured td,
+  .tbl .featured .row-name {
+    background: var(--sand);
+  }
+
+  .overview {
+    list-style: none;
+    margin: 0;
+    padding: 4px 20px;
+  }
+
+  .overview li {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .overview li:last-child {
+    border-bottom: 0;
+  }
+
+  .overview-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin: 0 0 4px;
+  }
+
+  .overview-name {
+    font-size: 22px;
+    color: var(--ink);
+  }
+
+  .overview-price {
+    font-size: 22px;
+    white-space: nowrap;
+  }
+
+  .footnote {
+    margin-top: 16px;
+    font-size: 15px;
+  }
+
+  .splits {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .split {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .split-l {
+    flex: 0 0 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(28px, 4vw, 56px);
+  }
+
+  .split-l .eyebrow {
+    margin: 0 0 12px;
+  }
+
+  .split-name {
+    font-size: clamp(36px, 3.6vw, 48px);
+    line-height: 1.08;
+  }
+
+  .split-price {
+    margin-top: 8px;
+    font-size: clamp(48px, 5vw, 64px);
+    line-height: 1;
+  }
+
+  .split-l .gold-rule {
+    width: 72px;
+    margin: 18px 0;
+  }
+
+  .split-tagline {
+    color: var(--mist);
+  }
+
+  .split-r {
+    flex: 1 1 480px;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px 32px;
+    padding: clamp(28px, 4vw, 56px);
+    background: var(--paper);
+  }
+
+  .split-content {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .split-r :global(.flag) {
+    display: block;
+    width: 200px;
+    height: auto;
+  }
+
+  .steps-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 28px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+
+  .steps li {
+    padding-top: 20px;
+    border-top: 3px solid var(--gold-rule);
+  }
+
+  .step-no {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 36px;
+    line-height: 1;
+  }
+
+  @media (max-width: 960px) {
+    .split-l,
+    .split-r {
+      flex-basis: 100%;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .desktop-only,
+    .desktop-only-inline {
+      display: none;
+    }
+
+    .mobile-only {
+      display: block;
+    }
+
+    span.mobile-only {
+      display: inline;
+    }
+
+    .stats {
+      grid-template-columns: 1fr;
+      padding-top: 0;
+    }
+
+    .stat {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 0;
+      border-left: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-value {
+      font-size: 34px;
+    }
+
+    .stat-label {
+      margin: 0;
+    }
+
+    .split-l,
+    .split-r {
+      flex-basis: 100%;
+    }
+
+    .split-r {
+      padding: 24px 20px 28px;
+    }
+
+    .split-l {
+      padding: 28px 20px;
+    }
+
+    .split-r :global(.flag) {
+      display: none;
+    }
+
+    .steps {
+      gap: 0;
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 12px;
+      padding: 16px 0 20px;
+    }
+
+    .step-no {
+      margin: 0;
+      font-size: 30px;
+    }
+  }
+</style>

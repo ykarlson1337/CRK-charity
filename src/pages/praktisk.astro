@@ -1,0 +1,384 @@
+---
+import { Image, Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactCta from '../components/ContactCta.astro';
+import fairway from '../assets/photos/golfbane-smorum.jpg';
+import restaurant from '../assets/photos/kongemosen-restaurant.jpg';
+import table from '../assets/photos/kongemosen-borddaekning.jpg';
+import kongemosen from '../assets/logos/kongemosen.png';
+import { event, formatKr, gala, holeInOne, par3Points, tournament, transport } from '../data/event';
+
+const chips = [
+  { label: 'Holdturnering', href: '#holdturnering' },
+  { label: 'Par 3', href: '#par3' },
+  { label: 'Gallamiddag', href: '#gallamiddag' },
+  { label: 'Transport og parkering', href: '#transport' },
+];
+---
+
+<Base
+  title="Spilformat og praktisk info"
+  description={`Format, starttid, regler, gallamiddag og transport til ${event.name} ${event.year} på ${event.venue}.`}
+  current="praktisk"
+>
+  <PageHero
+    eyebrow={`${event.dateLabel} · ${event.venue}`}
+    title="Spilformat og praktisk info"
+    lede="Det, I skal vide, når pladsen er booket: format, starttid og regler, gallamiddagen og transport."
+  >
+    <nav class="chips" aria-label="På denne side">
+      {
+        chips.map((c) => (
+          <a class="chip" href={c.href}>
+            {c.label}
+          </a>
+        ))
+      }
+    </nav>
+  </PageHero>
+
+  <section id="holdturnering" class="t-creme sec" aria-labelledby="holdturnering-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">18 huller</p>
+        <h2 id="holdturnering-title" class="disp h2">Holdturnering</h2>
+      </div>
+      <div class="facts">
+        {
+          tournament.map((t) => (
+            <div class="card fact">
+              <h3 class="disp fact-title">{t.title}</h3>
+              <p class="small fact-text">{t.text}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="hio" aria-labelledby="hio-title">
+        <div class="hio-copy">
+          <p class="eyebrow">HIO Diamant Challenge</p>
+          <h3 id="hio-title" class="disp hio-title">Hole in one vinder en diamant</h3>
+          <p class="body hio-text">
+            Rammer I hullet i ét slag på {holeInOne.hole}, vinder I en diamant til en værdi af {formatKr(holeInOne.prizeKr)}
+          </p>
+          <p class="small hio-note">{holeInOne.note}</p>
+        </div>
+        <div class="hio-prize" aria-hidden="true">
+          <span class="num">{formatKr(holeInOne.prizeKr)}</span>
+          <hr class="gold-rule" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="par3" class="t-skov sec" aria-labelledby="par3-title">
+    <div class="wrap split">
+      <Picture
+        src={fairway}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1200]}
+        sizes="(max-width: 760px) 100vw, 560px"
+        alt="To golfspillere på fairway på Smørum Golfklub"
+        class="photo split-photo"
+      />
+      <div class="split-copy">
+        <p class="eyebrow">Nybegyndere</p>
+        <h2 id="par3-title" class="disp h2">Par 3-turnering</h2>
+        <p class="lede par3-lede">
+          Alle kan være med. I får undervisning af professionelle trænere, før I spiller turnering på Smørums par 3-bane.
+        </p>
+        <ul class="check par3-list">
+          {par3Points.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallamiddag" class="t-creme sec" aria-labelledby="galla-title">
+    <div class="wrap gala">
+      <div class="gala-copy">
+        <p class="eyebrow">Kl. {gala.time}</p>
+        <h2 id="galla-title" class="disp h2">Gallamiddag på {event.dinnerVenue}</h2>
+        <p class="lede gala-lede">{gala.text}</p>
+        <dl class="gala-facts">
+          {
+            gala.facts.map((f) => (
+              <div>
+                <dt>{f.term}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <div class="gallery">
+        <Picture
+          src={restaurant}
+          formats={['avif', 'webp']}
+          widths={[480, 800, 1272]}
+          sizes="(max-width: 760px) 100vw, 540px"
+          alt="Restaurant Kongemosen med stråtag og terrasse"
+          pictureAttributes={{ class: 'g-main' }}
+          class="photo"
+        />
+        <Picture
+          src={table}
+          formats={['avif', 'webp']}
+          widths={[320, 576]}
+          sizes="(max-width: 760px) 50vw, 260px"
+          alt="Dækket bord med hvide duge på Restaurant Kongemosen"
+          pictureAttributes={{ class: 'g-small' }}
+          class="photo"
+        />
+        <div class="g-logo">
+          <Image src={kongemosen} alt="Restaurant Kongemosen" width={320} class="g-logo-img" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="transport" class="t-creme sec transport" aria-labelledby="transport-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Praktisk</p>
+        <h2 id="transport-title" class="disp h2">Transport og parkering</h2>
+      </div>
+      <div class="transport-grid">
+        {
+          transport.map((t) => (
+            <div class="card fact">
+              <h3 class="disp fact-title">{t.title}</h3>
+              <p class="small fact-text">{t.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <ContactCta eyebrow="Kontakt" title="Spørgsmål til dagen?" text="Ring til en af os, så hjælper vi.">
+    <a class="btn btn-gold btn-block-mobile" href="/">Til forsiden</a>
+  </ContactCta>
+</Base>
+
+<style>
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--mist);
+    border-radius: var(--radius-pill);
+    color: var(--cream);
+    font: 500 14px/1 var(--font-sans);
+    text-decoration: none;
+  }
+
+  .chip:hover {
+    background: rgba(201, 214, 204, 0.14);
+    color: var(--cream);
+  }
+
+  .facts {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+
+  .fact {
+    padding: 20px 22px 24px;
+  }
+
+  .fact-title {
+    margin-bottom: 8px;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .fact-text {
+    font-size: 15px;
+    color: var(--ink-body);
+  }
+
+  .hio {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 48px;
+    margin-top: 24px;
+    padding: clamp(24px, 3vw, 32px) clamp(24px, 3vw, 40px);
+    border-radius: var(--radius-md);
+    background: var(--forest-950);
+    box-shadow: var(--shadow-card);
+  }
+
+  .hio .eyebrow {
+    margin: 0 0 8px;
+    color: var(--gold);
+  }
+
+  .hio-copy {
+    flex: 1 1 420px;
+  }
+
+  .hio-title {
+    color: var(--cream);
+    font-size: clamp(28px, 3vw, 34px);
+    line-height: 1.15;
+  }
+
+  .hio-text {
+    margin-top: 10px;
+    color: var(--cream);
+  }
+
+  .hio-note {
+    margin-top: 8px;
+    color: var(--mist-muted);
+  }
+
+  .hio-prize .num {
+    font-size: clamp(44px, 4.6vw, 60px);
+    line-height: 1;
+    color: var(--gold-light);
+    white-space: nowrap;
+  }
+
+  .hio-prize .gold-rule {
+    width: 56px;
+    margin: 14px 0 0;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .split :global(.split-photo) {
+    aspect-ratio: 4 / 3;
+  }
+
+  .par3-lede {
+    margin-top: 20px;
+  }
+
+  .par3-list {
+    margin-top: 24px;
+  }
+
+  .par3-list li {
+    color: var(--cream);
+  }
+
+  .gala {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .gala-lede {
+    margin-top: 20px;
+  }
+
+  .gala-facts {
+    margin: 24px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .gala-facts div {
+    display: grid;
+    grid-template-columns: 112px 1fr;
+    gap: 16px;
+    padding: 6px 0;
+  }
+
+  .gala-facts dt {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .gala-facts dd {
+    margin: 0;
+    color: var(--ink-body);
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .gallery :global(.g-main) {
+    grid-column: 1 / -1;
+  }
+
+  .gallery :global(.g-main img) {
+    aspect-ratio: 16 / 10;
+  }
+
+  .gallery :global(.g-small img) {
+    aspect-ratio: 4 / 3;
+  }
+
+  .g-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+  }
+
+  .g-logo :global(.g-logo-img) {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+  }
+
+  .transport {
+    border-top: 1px solid var(--border);
+  }
+
+  .transport-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  }
+
+  @media (max-width: 860px) {
+    .split,
+    .gala {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .chip {
+      min-height: 36px;
+      padding: 0 14px;
+      font-size: 13px;
+    }
+
+    .hio-prize .num {
+      font-size: 44px;
+    }
+
+    .gala-facts div {
+      grid-template-columns: 96px 1fr;
+    }
+  }
+</style>
