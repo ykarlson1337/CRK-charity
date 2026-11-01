@@ -23,8 +23,10 @@ for (const file of htmlFiles(root)) {
   const text = readFileSync(file, 'utf8')
     .replace(/<(script|style)[\s\S]*?<\/\1>/g, ' ')
     .replace(/<[^>]+>/g, ' ')
-    .replace(/&[a-z]+;|&#\d+;/g, ' ');
-  for (const [match] of text.matchAll(/\[[^\[\]\n]{1,80}\]/g)) {
+    .replace(/&[a-z]+;|&#\d+;/g, ' ')
+    .replace(/\s+/g, ' ');
+  // Any length, so long notes like "[Bekræft ... uden for EU.]" are caught too.
+  for (const [match] of text.matchAll(/\[[^\[\]]+\]/g)) {
     const page = '/' + relative(root, file).replace(/index\.html$/, '');
     if (!found.has(match)) found.set(match, new Set());
     found.get(match).add(page);
