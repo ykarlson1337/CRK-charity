@@ -1,5 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/home/Hero.astro';
+import Stats from '../components/home/Stats.astro';
+import Day from '../components/home/Day.astro';
+import Program from '../components/home/Program.astro';
+import Prices from '../components/home/Prices.astro';
+import Purpose from '../components/home/Purpose.astro';
+import History from '../components/home/History.astro';
+import Auction from '../components/home/Auction.astro';
+import Sponsors from '../components/home/Sponsors.astro';
+import Faq from '../components/home/Faq.astro';
+import Booking from '../components/home/Booking.astro';
 import { event } from '../data/event';
 ---
 
@@ -7,14 +18,15 @@ import { event } from '../data/event';
   description={`${event.name} ${event.year}: holdturnering, par 3 for nybegyndere, gallamiddag og auktion. ${event.dateLabel} på ${event.venue}.`}
   current="home"
 >
-  <section class="t-skov sec">
-    <div class="wrap">
-      <p class="eyebrow">{event.club} præsenterer</p>
-      <h1 class="disp h1">Charity Golf {event.year}</h1>
-      <p class="tagline" style="margin-top: 12px;">Golf · Galla · Auktion</p>
-      <p class="lede" style="margin-top: 20px; color: var(--cream);">
-        {event.dateLabel} · {event.venue} · Gallamiddag på {event.dinnerVenue}
-      </p>
-    </div>
-  </section>
+  <Hero />
+  <Stats />
+  <Day />
+  <Program />
+  <Prices />
+  <Purpose />
+  <History />
+  <Auction />
+  <Sponsors />
+  <Faq />
+  <Booking />
 </Base>

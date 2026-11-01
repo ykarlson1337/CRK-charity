@@ -1,0 +1,71 @@
+---
+import { event, flags } from '../../data/event';
+---
+
+<section id="formaal" class="t-gold sec" aria-labelledby="formaal-title">
+  <div class="wrap purpose">
+    <div>
+      <p class="eyebrow">Det gode formål</p>
+      <h2 id="formaal-title" class="disp h2">Hvor pengene går hen</h2>
+      {
+        flags.formaalAnnonceret ? (
+          <p class="lede intro">
+            I {event.year} går overskuddet til {event.beneficiary}. [Én sætning om, hvad pengene konkret bliver brugt
+            til.]
+          </p>
+        ) : (
+          <p class="lede intro">
+            Modtageren offentliggøres {event.beneficiaryAnnounceDate}. Overskuddet fra turneringen, gallamiddagen og
+            auktionen går til det gode formål.
+          </p>
+        )
+      }
+      <p class="body story">
+        Turneringen startede i 2024 i Roskilde med 18 hold og 25.000 kr. til Røde Kors. Året efter flyttede den til
+        Hornbæk, hvor 22 hold samlede 191.311 kr. ind til Legeheltene. I 2027 flytter vi til Smørum og lægger par 3 for
+        nybegyndere, gallamiddag og auktion til.
+      </p>
+      <p class="tagline">Golf · Galla · Auktion</p>
+    </div>
+    <div class="placeholder-box frame">Foto fra det gode formål, når modtageren er annonceret</div>
+  </div>
+</section>
+
+<style>
+  .purpose {
+    display: grid;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
+  }
+
+  .intro {
+    margin-top: 20px;
+  }
+
+  .story {
+    margin-top: 16px;
+  }
+
+  .tagline {
+    margin-top: 28px;
+  }
+
+  .frame {
+    aspect-ratio: 4 / 3;
+    border: 6px solid var(--cream);
+    background: rgba(14, 42, 32, 0.08);
+    color: var(--forest-950);
+    box-shadow: var(--shadow-photo);
+  }
+
+  @media (max-width: 760px) {
+    .story {
+      font-size: 15px;
+    }
+
+    .frame {
+      border-width: 5px;
+    }
+  }
+</style>

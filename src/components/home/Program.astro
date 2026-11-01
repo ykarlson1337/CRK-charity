@@ -1,0 +1,107 @@
+---
+import { program } from '../../data/event';
+---
+
+<section id="program" class="t-skov sec" aria-labelledby="program-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Program</p>
+      <h2 id="program-title" class="disp h2">Sådan forløber dagen</h2>
+    </div>
+    <ol class="timeline">
+      {
+        program.map((p) => (
+          <li>
+            <span class="num time">{p.time}</span>
+            <span class="what">
+              <span class="title">{p.title}</span>
+              <span class="body text">{p.text}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="small note">
+      Adresser, parkering og regler finder I under <a class="link" href="/praktisk">Praktisk info</a>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 28px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  li {
+    padding-top: 22px;
+    border-top: 3px solid var(--gold-rule);
+  }
+
+  .time {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .title {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .text {
+    display: block;
+    font-size: 15px;
+  }
+
+  .note {
+    margin-top: 40px;
+    font-size: 15px;
+  }
+
+  .note .link {
+    font-size: 15px;
+  }
+
+  @media (max-width: 1000px) {
+    .timeline {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .timeline {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    li {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      padding: 16px 0 18px;
+    }
+
+    .time {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .title {
+      font-size: 17px;
+      margin-bottom: 4px;
+    }
+
+    .note {
+      margin-top: 24px;
+    }
+  }
+</style>

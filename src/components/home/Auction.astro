@@ -1,0 +1,115 @@
+---
+import { Picture, Image } from 'astro:assets';
+import restaurant from '../../assets/photos/kongemosen-restaurant.jpg';
+import kongemosen from '../../assets/logos/kongemosen.png';
+import { event } from '../../data/event';
+---
+
+<section id="auktion" class="t-skov sec" aria-labelledby="auktion-title">
+  <div class="wrap auction">
+    <div class="text">
+      <p class="eyebrow">Om aftenen</p>
+      <h2 id="auktion-title" class="disp h2">Auktionen</h2>
+      <p class="lede intro">
+        Under gallamiddagen bortauktionerer vi [eksempler på lots]. Alt, hvad auktionen indbringer, går til det gode
+        formål.
+      </p>
+      <p class="small lots">Listen over lots kommer i [måned] {event.year}.</p>
+    </div>
+    <figure class="media">
+      <Picture
+        src={restaurant}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1272]}
+        sizes="(max-width: 760px) 100vw, 560px"
+        alt="Restaurant Kongemosen med stråtag og terrasse ud mod vandet"
+        class="photo"
+      />
+      <figcaption>
+        <span class="small">Gallamiddag og auktion på {event.dinnerVenue}</span>
+        <Image src={kongemosen} alt="Kongemosen" width={240} class="logo" />
+      </figcaption>
+    </figure>
+    <div class="card cta">
+      <p class="body">Vil jeres virksomhed donere en oplevelse eller en ting til auktionen? Skriv til os.</p>
+      <a class="btn btn-gold btn-block-mobile" href="#kontakt" data-package="auction">Donér en auktionsgenstand</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .auction {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'text media'
+      'cta media';
+    gap: 24px clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .text {
+    grid-area: text;
+    align-self: end;
+  }
+
+  .media {
+    grid-area: media;
+    margin: 0;
+    align-self: center;
+  }
+
+  .cta {
+    grid-area: cta;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .cta .body {
+    color: var(--cream);
+  }
+
+  .intro {
+    margin-top: 20px;
+  }
+
+  .lots {
+    margin-top: 12px;
+    font-size: 15px;
+  }
+
+  .media :global(.photo) {
+    aspect-ratio: 4 / 3;
+  }
+
+  figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  figcaption :global(.logo) {
+    height: 48px;
+    width: auto;
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 860px) {
+    .auction {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'text'
+        'media'
+        'cta';
+    }
+
+    figcaption :global(.logo) {
+      height: 40px;
+    }
+  }
+</style>

@@ -1,0 +1,183 @@
+---
+import PackageCard from '../PackageCard.astro';
+import { event, formatKr, playPackages, singlePrices, visibilityPackages } from '../../data/event';
+---
+
+<section id="priser" class="t-creme sec" aria-labelledby="priser-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Priser</p>
+      <h2 id="priser-title" class="disp h2">Vælg jeres pakke</h2>
+      <p class="lede intro">
+        Alle fem pakker inkluderer gallamiddag for fire. Vælg et hold, en par 3-pakke eller et sponsorat med jeres logo
+        på banen og ved middagen.
+      </p>
+      <p class="small swipe-hint">Stryg til siden for at se alle pakker.</p>
+    </div>
+
+    <h3 class="disp h3 row-title">Spil med</h3>
+    <div class="cards cards-play" role="list" aria-label="Pakker til spillere">
+      {
+        playPackages.map((pkg) => (
+          <div role="listitem" class="cell">
+            <PackageCard pkg={pkg} />
+          </div>
+        ))
+      }
+    </div>
+    <div class="note singles">
+      <span class="singles-label">Løse pladser</span>
+      <ul>
+        {
+          singlePrices.map((s) => (
+            <li>
+              {s.label} {formatKr(s.price)}
+              {s.unit && ` ${s.unit}`}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <h3 class="disp h3 row-title row-title-2">Bliv set</h3>
+    <div class="cards cards-visibility" role="list" aria-label="Sponsorpakker">
+      {
+        visibilityPackages.map((pkg) => (
+          <div role="listitem" class="cell">
+            <PackageCard pkg={pkg} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="footnote">
+      <p class="small">{event.vatNote}</p>
+      <a class="link" href="/sponsor">Sammenlign alle pakker →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro {
+    margin-top: 20px;
+  }
+
+  .swipe-hint {
+    display: none;
+  }
+
+  .row-title {
+    margin-bottom: 20px;
+  }
+
+  .row-title-2 {
+    margin-top: 64px;
+  }
+
+  .cards {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  }
+
+  .cell {
+    display: flex;
+  }
+
+  .cell > :global(*) {
+    flex: 1;
+  }
+
+  .singles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 20px;
+    margin-top: 24px;
+    font-size: 15px;
+  }
+
+  .singles-label {
+    font-weight: 600;
+  }
+
+  .singles ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .singles li + li::before {
+    content: '·';
+    padding: 0 0.5em;
+  }
+
+  .footnote {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px 32px;
+    margin-top: 28px;
+  }
+
+  .footnote .small {
+    font-size: 15px;
+  }
+
+  @media (max-width: 760px) {
+    .swipe-hint {
+      display: block;
+      margin-top: 8px;
+    }
+
+    .row-title {
+      margin-bottom: 12px;
+    }
+
+    .row-title-2 {
+      margin-top: 48px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 12px;
+      margin-inline: calc(-1 * clamp(20px, 4.5vw, 64px));
+      padding: 4px clamp(20px, 4.5vw, 64px) 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: clamp(20px, 4.5vw, 64px);
+      scrollbar-width: none;
+    }
+
+    .cards::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cell {
+      flex: 0 0 300px;
+      scroll-snap-align: start;
+    }
+
+    .singles {
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .singles ul {
+      flex-direction: column;
+    }
+
+    .singles li + li::before {
+      content: none;
+    }
+
+    .footnote {
+      flex-direction: column;
+      margin-top: 8px;
+    }
+  }
+</style>

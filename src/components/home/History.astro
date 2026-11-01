@@ -1,0 +1,172 @@
+---
+import { Picture } from 'astro:assets';
+import handover from '../../assets/photos/overraekkelse-2026.jpeg';
+import { formatKr, handoverCaption, history, totals } from '../../data/event';
+
+// Chronological, so the story reads from the first tournament to the next one.
+const years = [...history].reverse();
+---
+
+<section id="historie" class="t-creme sec" aria-labelledby="historie-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Historien</p>
+      <h2 id="historie-title" class="disp h2">Udsolgt hvert år siden 2024</h2>
+    </div>
+
+    <ol class="years" data-history>
+      {
+        years.map((y) => (
+          <li class="year-item" data-year={y.year}>
+            <span class="dot" aria-hidden="true" />
+            <p class="num year">{y.year}</p>
+            <div class="content">
+              <h3 class="venue">{y.venue}</h3>
+              <p class="body facts">{y.teams}</p>
+              <p class="body facts">
+                {y.raised ? (
+                  <>
+                    <span class="num amount">{y.raised}</span> til {y.beneficiary}
+                  </>
+                ) : (
+                  y.beneficiary
+                )}
+              </p>
+              {y.photo && (
+                <figure class="handover">
+                  <Picture
+                    src={handover}
+                    formats={['avif', 'webp']}
+                    widths={[480, 720, 1040]}
+                    sizes="(max-width: 760px) 100vw, 520px"
+                    alt="Overrækkelse af checken til Legeheltene den 13. maj 2026"
+                    class="photo"
+                  />
+                  <figcaption class="small">{handoverCaption}</figcaption>
+                </figure>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="body total">
+      I alt <span class="num amount-total">{formatKr(totals.donatedKr)}</span> til velgørenhed siden 2024 [plus 2026-beløbet].
+    </p>
+  </div>
+</section>
+
+<style>
+  .years {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    --line-x: 9px;
+  }
+
+  /* The gold rule running through the years. */
+  .years::before {
+    content: '';
+    position: absolute;
+    left: var(--line-x);
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: var(--gold-rule);
+    transform-origin: top;
+  }
+
+  .year-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 40px 140px minmax(0, 1fr);
+    gap: 0 24px;
+    padding-bottom: clamp(32px, 4vw, 48px);
+  }
+
+  .year-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .dot {
+    position: relative;
+    z-index: 1;
+    width: 21px;
+    height: 21px;
+    margin-top: 10px;
+    border: 3px solid var(--gold-rule);
+    border-radius: 50%;
+    background: var(--cream);
+  }
+
+  .year {
+    font-size: clamp(36px, 4vw, 48px);
+    line-height: 1;
+  }
+
+  .venue {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--forest-950);
+  }
+
+  .facts {
+    font-size: 16px;
+  }
+
+  .amount {
+    font-size: 22px;
+  }
+
+  .handover {
+    max-width: 520px;
+    margin: 20px 0 0;
+  }
+
+  .handover figcaption {
+    margin-top: 10px;
+  }
+
+  .total {
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: 24px;
+    border-top: 1px solid var(--line-cream);
+  }
+
+  .amount-total {
+    font-size: 28px;
+  }
+
+  @media (max-width: 760px) {
+    .year-item {
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 4px 16px;
+    }
+
+    .year {
+      grid-column: 2;
+      font-size: 32px;
+    }
+
+    .content {
+      grid-column: 2;
+    }
+
+    .dot {
+      grid-row: 1;
+      margin-top: 6px;
+    }
+
+    .facts {
+      font-size: 15px;
+    }
+
+    .amount-total {
+      font-size: 26px;
+    }
+  }
+</style>
