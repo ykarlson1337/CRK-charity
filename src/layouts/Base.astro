@@ -3,7 +3,8 @@ import '../styles/tokens.css';
 import '../styles/base.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { event } from '../data/event';
+import Analytics from '@vercel/analytics/astro';
+import { event, flags } from '../data/event';
 
 export type Current = 'home' | 'sponsor' | 'praktisk' | 'other';
 
@@ -20,6 +21,8 @@ const fullTitle = title
   ? `${title} · ${event.name} ${event.year}`
   : `${event.name} ${event.year} · Golf, galla og auktion`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.jpg', Astro.site);
+const robots = noindex || !flags.indexable ? 'noindex' : null;
 ---
 
 <!doctype html>
@@ -31,13 +34,26 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {robots && <meta name="robots" content={robots} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="da_DK" />
+    <meta property="og:site_name" content={`${event.name} ${event.year}`} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${event.shortName} ${event.year}: golf, galla og auktion`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#0e2a20" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preload" href="/fonts/CormorantGaramond-Variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/DMSans-Variable.woff2" as="font" type="font/woff2" crossorigin />
     <slot name="head" />
+    <Analytics />
   </head>
   <body>
     <a class="skip-link" href="#indhold">Spring til indhold</a>

@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactList from '../components/ContactList.astro';
+import { event } from '../data/event';
+---
+
+<Base title="Tak for jeres forespørgsel" description="Vi har modtaget jeres forespørgsel." current="other" noindex>
+  <section class="t-skov sec thanks">
+    <div class="wrap layout">
+      <div class="copy">
+        <p class="eyebrow">Forespørgsel modtaget</p>
+        <h1 class="disp h1">Tak. Vi vender tilbage.</h1>
+        <p class="lede intro">
+          Vi bekræfter jeres plads og sender faktura inden for {event.replyDays} hverdage. Har I spørgsmål imens, så ring til en
+          af os.
+        </p>
+        <div class="actions">
+          <a class="btn btn-gold btn-block-mobile" href="/">Til forsiden</a>
+          <a class="btn btn-ghost btn-block-mobile" href="/praktisk">Praktisk info</a>
+        </div>
+      </div>
+      <ContactList />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .thanks {
+    min-height: 60vh;
+  }
+
+  .layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px clamp(40px, 6vw, 96px);
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .copy {
+    flex: 1 1 420px;
+    max-width: 640px;
+  }
+
+  .h1 {
+    font-size: clamp(44px, 6vw, 72px);
+  }
+
+  .intro {
+    margin-top: 20px;
+    color: var(--cream);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .layout > :global(ul) {
+    flex: 0 1 320px;
+  }
+
+  @media (max-width: 760px) {
+    .actions {
+      flex-direction: column;
+    }
+
+    .layout > :global(ul) {
+      flex: 1 1 100%;
+      padding-top: 28px;
+      border-top: 1px solid var(--line-forest);
+    }
+  }
+</style>
