@@ -10,6 +10,9 @@ export const flags = {
   titelsponsorSolgt: false,
   /** Set to true when the 2027 beneficiary has been announced. */
   formaalAnnonceret: false,
+  /** Let search engines index the site. Keep false while [placeholders]
+   *  are visible; `npm run build` lists the ones left. */
+  indexable: false,
 };
 
 export const event = {

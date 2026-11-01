@@ -15,6 +15,7 @@ import { bookingOptions, event } from '../../data/event';
     </div>
     <div class="layout">
       <form class="t-creme booking" action="/api/booking" method="post" aria-label="Booking-forespørgsel" data-booking>
+        <p class="form-error full" role="alert" hidden data-form-error></p>
         <p class="small full">Felter med * skal udfyldes.</p>
         <div class="field">
           <label for="f-navn">Navn *</label>
@@ -72,6 +73,18 @@ import { bookingOptions, event } from '../../data/event';
 </section>
 
 <script>
+  // Show the error the booking endpoint sent us back with (?fejl=...).
+  const errors: Record<string, string> = {
+    felter: 'Udfyld navn, e-mail, telefon og pakke, og prøv igen.',
+    send: 'Vi kunne ikke sende jeres forespørgsel lige nu. Prøv igen senere, eller ring til en af os.',
+  };
+  const errorBox = document.querySelector<HTMLElement>('[data-form-error]');
+  const errorCode = new URLSearchParams(window.location.search).get('fejl');
+  if (errorBox && errorCode && errors[errorCode]) {
+    errorBox.textContent = errors[errorCode];
+    errorBox.hidden = false;
+  }
+
   // Preselect the package when a package button is used, on this page or
   // via /?pakke=<id>#kontakt from another page.
   const select = document.querySelector<HTMLSelectElement>('#f-pakke');
@@ -137,6 +150,20 @@ import { bookingOptions, event } from '../../data/event';
   textarea.input {
     min-height: 112px;
     resize: vertical;
+  }
+
+  .form-error {
+    margin: 0;
+    padding: 12px 16px;
+    border-left: 3px solid #a3402c;
+    border-radius: var(--radius-sm);
+    background: #f6e3dc;
+    color: #5c2316;
+    font: 500 15px/1.45 var(--font-sans);
+  }
+
+  .form-error[hidden] {
+    display: none;
   }
 
   .hp {
